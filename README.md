@@ -77,10 +77,13 @@ Now, it's possible to manage roles with maximum ease:
    conflict with something in your class, it’s possible to define a prefix:
 
         class Lp < ActiveRecord::Base
-          as_set :media_condition, [:new, :sealed, :very_good, :good, :fair, :poor], prefix: true
+          as_set :media_conditions, [:new, :sealed, :very_good, :good, :fair, :poor], prefix: true
         end
 
         Bug.media_condition_new #=> 1
+
+   When `:prefix` is set to `true`, shortcut methods are prefixed by the
+   _singularized name_ of the attribute.
 
    The `:prefix` option not only takes a boolean value as an argument, but
    instead can also be supplied a custom prefix (i.e. any string or symbol), so

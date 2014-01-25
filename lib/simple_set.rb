@@ -1,4 +1,5 @@
 require 'active_support'
+require 'active_support/inflector'
 
 require 'simple_set/version'
 require 'simple_set/set_hash'
@@ -103,7 +104,7 @@ module SimpleSet
       end
 
       if options[:slim] != true then
-        prefix = options[:prefix] && "#{options[:prefix] == true ? set_cd : options[:prefix]}_"
+        prefix = options[:prefix] && "#{options[:prefix] == true ? set_cd.to_s.singularize : options[:prefix]}_"
         values.each do |k,code|
           sym = SetHash.symbolize(k)
 

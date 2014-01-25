@@ -154,20 +154,20 @@ describe SimpleSet do
         end
 
         sample = TestOptionPrefix1.new
-        sample.should respond_to(:spoken_languages_english?)
-        sample.should respond_to(:spoken_languages_french?)
-        sample.should respond_to(:spoken_languages_german?)
-        sample.should respond_to(:spoken_languages_japanese?)
+        sample.should respond_to(:spoken_language_english?)
+        sample.should respond_to(:spoken_language_french?)
+        sample.should respond_to(:spoken_language_german?)
+        sample.should respond_to(:spoken_language_japanese?)
 
-        sample.should respond_to(:spoken_languages_english=)
-        sample.should respond_to(:spoken_languages_french=)
-        sample.should respond_to(:spoken_languages_german=)
-        sample.should respond_to(:spoken_languages_japanese=)
+        sample.should respond_to(:spoken_language_english=)
+        sample.should respond_to(:spoken_language_french=)
+        sample.should respond_to(:spoken_language_german=)
+        sample.should respond_to(:spoken_language_japanese=)
 
-        TestOptionPrefix1.should respond_to(:spoken_languages_english)
-        TestOptionPrefix1.should respond_to(:spoken_languages_french)
-        TestOptionPrefix1.should respond_to(:spoken_languages_german)
-        TestOptionPrefix1.should respond_to(:spoken_languages_japanese)
+        TestOptionPrefix1.should respond_to(:spoken_language_english)
+        TestOptionPrefix1.should respond_to(:spoken_language_french)
+        TestOptionPrefix1.should respond_to(:spoken_language_german)
+        TestOptionPrefix1.should respond_to(:spoken_language_japanese)
 
         sample.should_not respond_to(:japanese?)
       end
