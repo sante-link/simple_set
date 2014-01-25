@@ -98,6 +98,10 @@ module SimpleSet
         send("#{options[:column]}=", real)
       end
 
+      metaclass.send :define_method, "#{set_cd}" do
+        return values.keys
+      end
+
       if options[:slim] != true then
         prefix = options[:prefix] && "#{options[:prefix] == true ? set_cd : options[:prefix]}_"
         values.each do |k,code|

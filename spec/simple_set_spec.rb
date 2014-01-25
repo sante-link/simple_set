@@ -102,6 +102,14 @@ describe SimpleSet do
     sample.fruits_i_like_cd.should == 5
   end
 
+  it 'should return acceptable values' do
+    named_model('AcceptableValues') do
+      as_set :spoken_languages, [:english, :french, :german, :japanese]
+    end
+
+    AcceptableValues.spoken_languages.should == [:english, :french, :german, :japanese]
+  end
+
   #   ___        _   _
   #  / _ \ _ __ | |_(_) ___  _ __  ___
   # | | | | '_ \| __| |/ _ \| '_ \/ __|
