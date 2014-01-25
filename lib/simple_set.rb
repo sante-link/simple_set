@@ -88,14 +88,17 @@ module SimpleSet
 
       define_method("#{set_cd}=") do |new_values|
         real = nil
-        real = new_values.collect do |k|
-          if values.has_key?(k) then
-            values[k]
-          else
-            raise(ArgumentError, "Invalid set value : #{k}") if options[:whiny]
-            0
-          end
-        end.inject(:|) unless new_values.nil?
+        if ! new_values.nil? then
+          new_values = new_values.reject { |x| x == ''}.collect { |x| x.to_sym }
+          real = new_values.collect do |k|
+            if values.has_key?(k) then
+              values[k]
+            else
+              raise(ArgumentError, "Invalid set value : #{k}") if options[:whiny]
+              0
+            end
+          end.inject(:|)
+        end
         send("#{options[:column]}=", real)
       end
 

@@ -110,6 +110,16 @@ describe SimpleSet do
     AcceptableValues.spoken_languages.should == [:english, :french, :german, :japanese]
   end
 
+  it 'should support Rails assignment' do
+    named_model('User') do
+      as_set :values, [:foo_manager, :bar_manager, :baz_manager]
+    end
+
+    sample = User.new
+    sample.values = ["foo_manager", "baz_manager", ""]
+    sample.values.should == [:foo_manager, :baz_manager]
+  end
+
   #   ___        _   _
   #  / _ \ _ __ | |_(_) ___  _ __  ___
   # | | | | '_ \| __| |/ _ \| '_ \/ __|
