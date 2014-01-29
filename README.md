@@ -2,7 +2,7 @@
 
 A Rails plugin which brings easy-to-use set-like functionality to ActiveRecord models.
 
-This is based on [SimpleEnum]{https://github.com/lwe/simple_enum}.
+This is based on [SimpleEnum](https://github.com/lwe/simple_enum).
 
 ## Installation
 
