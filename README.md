@@ -105,17 +105,17 @@ Now, it's possible to manage roles with maximum ease:
 
 5. Easy Rails integration:
 
-Given a `User` is declared as:
+   Given a `User` is declared as:
 
         class User < ActiveRecord::Base
           as_set :roles, [:management, :accounting, :human_resources]
         end
 
-Adjust strong parameters to allow roles assignment:
+   Adjust strong parameters to allow roles assignment:
 
         params.require(:user).permit(:roles => [])
 
-And then render a collection of checkboxes:
+   And then render a collection of checkboxes:
 
         = form_for @user do |f|
           = f.collection_check_boxes(:roles, User.roles, :to_sym, :to_sym) do |b|
