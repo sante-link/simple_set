@@ -80,7 +80,7 @@ Now, it's possible to manage roles with maximum ease:
           as_set :media_conditions, [:new, :sealed, :very_good, :good, :fair, :poor], prefix: true
         end
 
-        Bug.media_condition_new #=> 1
+        Lp.media_condition_new #=> 1
 
    When `:prefix` is set to `true`, shortcut methods are prefixed by the
    _singularized name_ of the attribute.
