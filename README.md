@@ -58,20 +58,32 @@ Now, it's possible to manage roles with maximum ease:
 2. Although the `Hash` notation is less intuitive than the `Array` notation, it
    allows some neat tricks:
 
-        class User
-          as_set :roles, {
-            management: 1,
-            accounting: 2,
-            human_resources: 4,
+        class Pixel
+          as_set :rgb, {
+            red: 1,
+            green: 2,
+            blue: 4,
 
-            director: 7,
+            yellow: 3,
+            magenta: 5,
+            cyan: 6,
+            white: 7,
           }
         end
 
-        bob = User.create(roles: [:management, :accounting])
-        bob.director?                                         #=> false
-        bob.human_resources = true
-        bob.director?                                         #=> true
+        x = Pixel.create(rgb: [:red, :blue])
+        x.red?          #=> true
+        x.green?        #=> false
+        x.blue?         #=> true
+
+        x.yellow?       #=> false
+        x.magenta?      #=> true
+        x.cyan?         #=> false
+
+        x.white?        #=> false
+
+        x.green = true
+        x.white?        #=> true
 
 3. If the shortcut methods (like `<symbol>?`, `<symbol>=` or `Klass.<symbol>`)
    conflict with something in your class, it’s possible to define a prefix:
