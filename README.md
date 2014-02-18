@@ -72,7 +72,7 @@ bob.roles_cd              #=> 1
 2. Although the `Hash` notation is less intuitive than the `Array` notation, it
    allows some neat tricks:
 
-   ```
+   ```ruby
    class Pixel
      as_set :rgb, {
        red: 1,
