@@ -1,4 +1,4 @@
-# SimpleSet [![Build Status](https://travis-ci.org/SanteLink/simple_set.png?branch=master)](https://travis-ci.org/SanteLink/simple_set)
+# SimpleSet [![Build Status](https://travis-ci.org/sante-link/simple_set.png?branch=master)](https://travis-ci.org/sante-link/simple_set)
 
 A Rails plugin which brings easy-to-use set-like functionality to ActiveRecord models.
 
