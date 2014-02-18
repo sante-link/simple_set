@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Romain Tartière"]
   spec.email         = ["romain@blogreen.org"]
   spec.summary       = %q{Simple set-like field support for ActiveModel}
-  spec.homepage      = "https://github.com/smortex/simple_set"
+  spec.homepage      = "https://github.com/SanteLink/simple_set"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
