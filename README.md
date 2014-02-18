@@ -8,48 +8,62 @@ This is based on [SimpleEnum](https://github.com/lwe/simple_enum).
 
 Add this line to your application's Gemfile:
 
-    gem 'simple_set'
+```
+gem 'simple_set'
+```
 
 And then execute:
 
-    $ bundle
+```
+$ bundle
+```
 
 Or install it yourself as:
 
-    $ gem install simple_set
+```
+$ gem install simple_set
+```
 
 ## Usage
 
 Add this to a model:
 
-    class User < ActiveRecord::Base
-      as_set :roles, [:accounting, :management]
-    end
+```ruby
+class User < ActiveRecord::Base
+  as_set :roles, [:accounting, :management]
+end
+```
 
 Then create the required `roles_cd` column using migrations:
 
-    class AddRolesToUsers < ActiveRecord::Migration
-      def change
-        add_column :users, :roles_cd, :integer
-      end
-    end
+```ruby
+class AddRolesToUsers < ActiveRecord::Migration
+  def change
+    add_column :users, :roles_cd, :integer
+  end
+end
+```
 
 Now, it's possible to manage roles with maximum ease:
 
-    bob = User.new
-    bob.roles = [:accounting]
-    bob.accounting?           #=> true
-    bob.management?           #=> false
-    bob.roles                 #=> [:accounting]
-    bob.roles_cd              #=> 1
+```ruby
+bob = User.new
+bob.roles = [:accounting]
+bob.accounting?           #=> true
+bob.management?           #=> false
+bob.roles                 #=> [:accounting]
+bob.roles_cd              #=> 1
+```
 
 ## Gotchas
 
 1. Acceptable values can be provided as an `Array` or as a `Hash`, the
    following lines are equivalent:
 
-        as_set :spoken_languages, [:english, :french, :german, :japanese]
-        as_set :spoken_languages, {english: 1, french: 2, german: 4, japanese: 8}
+   ```ruby
+   as_set :spoken_languages, [:english, :french, :german, :japanese]
+   as_set :spoken_languages, {english: 1, french: 2, german: 4, japanese: 8}
+   ```
 
    Reordering the array will change each element's value which is likely
    unwanted.  Either only append new elements to the `Array` notation or use
@@ -58,41 +72,45 @@ Now, it's possible to manage roles with maximum ease:
 2. Although the `Hash` notation is less intuitive than the `Array` notation, it
    allows some neat tricks:
 
-        class Pixel
-          as_set :rgb, {
-            red: 1,
-            green: 2,
-            blue: 4,
+   ```
+   class Pixel
+     as_set :rgb, {
+       red: 1,
+       green: 2,
+       blue: 4,
 
-            yellow: 3,
-            magenta: 5,
-            cyan: 6,
-            white: 7,
-          }
-        end
+       yellow: 3,
+       magenta: 5,
+       cyan: 6,
+       white: 7,
+     }
+   end
 
-        x = Pixel.create(rgb: [:red, :blue])
-        x.red?          #=> true
-        x.green?        #=> false
-        x.blue?         #=> true
+   x = Pixel.create(rgb: [:red, :blue])
+   x.red?          #=> true
+   x.green?        #=> false
+   x.blue?         #=> true
 
-        x.yellow?       #=> false
-        x.magenta?      #=> true
-        x.cyan?         #=> false
+   x.yellow?       #=> false
+   x.magenta?      #=> true
+   x.cyan?         #=> false
 
-        x.white?        #=> false
+   x.white?        #=> false
 
-        x.green = true
-        x.white?        #=> true
+   x.green = true
+   x.white?        #=> true
+   ```
 
 3. If the shortcut methods (like `<symbol>?`, `<symbol>=` or `Klass.<symbol>`)
    conflict with something in your class, it’s possible to define a prefix:
 
-        class Lp < ActiveRecord::Base
-          as_set :media_conditions, [:new, :sealed, :very_good, :good, :fair, :poor], prefix: true
-        end
+   ```ruby
+   class Lp < ActiveRecord::Base
+     as_set :media_conditions, [:new, :sealed, :very_good, :good, :fair, :poor], prefix: true
+   end
 
-        Lp.media_condition_new #=> 1
+   Lp.media_condition_new #=> 1
+   ```
 
    When `:prefix` is set to `true`, shortcut methods are prefixed by the
    _singularized name_ of the attribute.
@@ -105,35 +123,43 @@ Now, it's possible to manage roles with maximum ease:
    methods (`<symbol>?`, `<symbol>=` and `Klass.<symbol>`), to do so just add
    the option `slim: true`:
 
-        class User
-          as_set :spoken_languages, [:english, :french, :german, :japanese], slim: true
-        end
+   ```ruby
+   class User
+     as_set :spoken_languages, [:english, :french, :german, :japanese], slim: true
+   end
 
-        bob = User.create(spoken_languages: [:english, :french]
-        bob.spoken_languages #=> [:english, :french]
-        bob.french?          #=> throws NoMethodError: undefined method `french?'
-        bob.french = false   #=> throws NoMethodError: undefined method `french='
-        User.french          #=> throws NoMethodError: undefined method `french'
+   bob = User.create(spoken_languages: [:english, :french]
+   bob.spoken_languages #=> [:english, :french]
+   bob.french?          #=> throws NoMethodError: undefined method `french?'
+   bob.french = false   #=> throws NoMethodError: undefined method `french='
+   User.french          #=> throws NoMethodError: undefined method `french'
+   ```
 
 5. Easy Rails integration:
 
    Given a `User` is declared as:
 
-        class User < ActiveRecord::Base
-          as_set :roles, [:management, :accounting, :human_resources]
-        end
+   ```ruby
+   class User < ActiveRecord::Base
+     as_set :roles, [:management, :accounting, :human_resources]
+   end
+   ```
 
    Adjust strong parameters to allow roles assignment:
 
-        params.require(:user).permit(:roles => [])
+   ```ruby
+   params.require(:user).permit(:roles => [])
+   ```
 
    And then render a collection of checkboxes:
 
-        = form_for @user do |f|
-          = f.collection_check_boxes(:roles, User.roles, :to_sym, :to_sym) do |b|
-            = b.check_box
-            = b.label do
-              = t("application.roles.#{b.text}")
+   ```haml
+   = form_for @user do |f|
+     = f.collection_check_boxes(:roles, User.roles, :to_sym, :to_sym) do |b|
+       = b.check_box
+       = b.label do
+         = t("application.roles.#{b.text}")
+   ```
 
 ## Contributing
 
