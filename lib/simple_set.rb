@@ -109,7 +109,7 @@ module SimpleSet
       if options[:slim] != true then
         prefix = options[:prefix] && "#{options[:prefix] == true ? set_cd.to_s.singularize : options[:prefix]}_"
         values.each do |k,code|
-          sym = SetHash.symbolize(k)
+          sym = ::SimpleEnum::EnumHash.symbolize(k)
 
           define_method("#{prefix}#{sym}?") do
             current = send(options[:column]) || 0

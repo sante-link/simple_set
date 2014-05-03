@@ -1,7 +1,7 @@
 require 'simple_enum/enum_hash'
 
 module SimpleSet
-  class SetHash < ::SimpleEnum::EnumHash
+  class SetHash < ::ActiveSupport::OrderedHash
     def initialize(args = [], strings = false)
       super()
 
@@ -13,6 +13,14 @@ module SimpleSet
         ary ||= args
         ary.each { |e| set_value_for_reverse_lookup(e[0], strings ? e[0].to_s : e[1]) }
       end
+
+      freeze
+    end
+
+  private
+    def set_value_for_reverse_lookup(key, value)
+      sym = ::SimpleEnum::EnumHash.symbolize(key)
+      self[key] = value
     end
   end
 end
