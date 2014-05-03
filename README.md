@@ -102,14 +102,19 @@ bob.roles_cd              #=> 1
    ```
 
 3. If the shortcut methods (like `<symbol>?`, `<symbol>=` or `Klass.<symbol>`)
-   conflict with something in your class, it’s possible to define a prefix:
+   conflict with something in your class, an error will be raised.  You can
+   avoid this situation by defining a prefix:
 
    ```ruby
    class Lp < ActiveRecord::Base
+     # Without :prefix, the :new media condition bellow would generate a
+     # Lp::new method that returns 1 and overrides the constructor.  This is
+     # likely unwanted and a :prefix must be set to avoid this situation:
      as_set :media_conditions, [:new, :sealed, :very_good, :good, :fair, :poor], prefix: true
    end
 
    Lp.media_condition_new #=> 1
+   Lp.new                 #=> #<Lp:0x00000803c22b98>
    ```
 
    When `:prefix` is set to `true`, shortcut methods are prefixed by the
