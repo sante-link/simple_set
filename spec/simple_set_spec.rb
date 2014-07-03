@@ -17,12 +17,12 @@ describe SimpleSet do
       as_set :values, [:a, :b, :c, :d, :e, :f]
     end
 
-    InitWithArrayOfSymbol.a.should == 1
-    InitWithArrayOfSymbol.b.should == 2
-    InitWithArrayOfSymbol.c.should == 4
-    InitWithArrayOfSymbol.d.should == 8
-    InitWithArrayOfSymbol.e.should == 16
-    InitWithArrayOfSymbol.f.should == 32
+    expect(InitWithArrayOfSymbol.a).to eq(1)
+    expect(InitWithArrayOfSymbol.b).to eq(2)
+    expect(InitWithArrayOfSymbol.c).to eq(4)
+    expect(InitWithArrayOfSymbol.d).to eq(8)
+    expect(InitWithArrayOfSymbol.e).to eq(16)
+    expect(InitWithArrayOfSymbol.f).to eq(32)
   end
 
   it 'should accept a hash' do
@@ -30,23 +30,23 @@ describe SimpleSet do
       as_set :values, { a: 1, b: 2, c: 4, d: 8, all: 15 }
     end
 
-    InitWithHash.a.should == 1
-    InitWithHash.b.should == 2
-    InitWithHash.c.should == 4
-    InitWithHash.d.should == 8
-    InitWithHash.all.should == 15
+    expect(InitWithHash.a).to eq(1)
+    expect(InitWithHash.b).to eq(2)
+    expect(InitWithHash.c).to eq(4)
+    expect(InitWithHash.d).to eq(8)
+    expect(InitWithHash.all).to eq(15)
 
     sample = InitWithHash.new
     sample.all = true
-    sample.a?.should be_true
-    sample.b?.should be_true
-    sample.c?.should be_true
-    sample.d?.should be_true
-    sample.all?.should be_true
+    expect(sample.a?).to be_truthy
+    expect(sample.b?).to be_truthy
+    expect(sample.c?).to be_truthy
+    expect(sample.d?).to be_truthy
+    expect(sample.all?).to be_truthy
     sample.b = false
-    sample.all?.should be_false
+    expect(sample.all?).to be_falsey
     sample.b = true
-    sample.all?.should be_true
+    expect(sample.all?).to be_truthy
   end
 
   it 'should distinguish nil from empty set' do
@@ -56,25 +56,25 @@ describe SimpleSet do
 
     sample = NilOrEmpty.new
 
-    sample.a?.should be_false
-    sample.b?.should be_false
-    sample.values_cd.should == nil
-    sample.values.should == nil
+    expect(sample.a?).to be_falsey
+    expect(sample.b?).to be_falsey
+    expect(sample.values_cd).to eq(nil)
+    expect(sample.values).to eq(nil)
 
     sample.values = [:a]
-    sample.values.should == [:a]
+    expect(sample.values).to eq([:a])
     sample.values = nil
-    sample.values.should == nil
+    expect(sample.values).to eq(nil)
 
     sample.a = true
-    sample.values.should == [:a]
+    expect(sample.values).to eq([:a])
     sample.a = false
-    sample.values.should == []
+    expect(sample.values).to eq([])
 
     sample.values = nil
-    sample.values.should == nil
+    expect(sample.values).to eq(nil)
     sample.a = false
-    sample.values.should == []
+    expect(sample.values).to eq([])
   end
 
   it 'should support fields with a default value' do
@@ -83,11 +83,11 @@ describe SimpleSet do
     end
 
     sample = FieldWithDefaultValue.new
-    sample.values_with_default_cd.should == 2
-    sample.values_with_default.should == [:y]
+    expect(sample.values_with_default_cd).to eq(2)
+    expect(sample.values_with_default).to eq([:y])
 
     sample.values_with_default = nil
-    sample.values_with_default.should == nil
+    expect(sample.values_with_default).to eq(nil)
   end
 
   it 'should work outside activerecord' do
@@ -99,7 +99,7 @@ describe SimpleSet do
 
     sample = FruitsEater.new
     sample.fruits_i_like = [:apples, :pinaple]
-    sample.fruits_i_like_cd.should == 5
+    expect(sample.fruits_i_like_cd).to eq(5)
   end
 
   it 'should return acceptable values' do
@@ -107,7 +107,7 @@ describe SimpleSet do
       as_set :spoken_languages, [:english, :french, :german, :japanese]
     end
 
-    AcceptableValues.spoken_languages.should == [:english, :french, :german, :japanese]
+    expect(AcceptableValues.spoken_languages).to eq([:english, :french, :german, :japanese])
   end
 
   it 'should support Rails assignment' do
@@ -117,7 +117,7 @@ describe SimpleSet do
 
     sample = User.new
     sample.values = ["foo_manager", "baz_manager", ""]
-    sample.values.should == [:foo_manager, :baz_manager]
+    expect(sample.values).to eq([:foo_manager, :baz_manager])
   end
 
   #   ___        _   _
@@ -143,11 +143,11 @@ describe SimpleSet do
 
         sample = TestOptionColumn1.new
         sample.languages = [:french, :german]
-        sample.english?.should be_false
-        sample.french?.should be_true
-        sample.german?.should be_true
-        sample.japanese?.should be_false
-        sample.custom_name.should == 6
+        expect(sample.english?).to be_falsey
+        expect(sample.french?).to be_truthy
+        expect(sample.german?).to be_truthy
+        expect(sample.japanese?).to be_falsey
+        expect(sample.custom_name).to eq(6)
       end
     end
 
@@ -164,22 +164,22 @@ describe SimpleSet do
         end
 
         sample = TestOptionPrefix1.new
-        sample.should respond_to(:spoken_language_english?)
-        sample.should respond_to(:spoken_language_french?)
-        sample.should respond_to(:spoken_language_german?)
-        sample.should respond_to(:spoken_language_japanese?)
+        expect(sample).to respond_to(:spoken_language_english?)
+        expect(sample).to respond_to(:spoken_language_french?)
+        expect(sample).to respond_to(:spoken_language_german?)
+        expect(sample).to respond_to(:spoken_language_japanese?)
 
-        sample.should respond_to(:spoken_language_english=)
-        sample.should respond_to(:spoken_language_french=)
-        sample.should respond_to(:spoken_language_german=)
-        sample.should respond_to(:spoken_language_japanese=)
+        expect(sample).to respond_to(:spoken_language_english=)
+        expect(sample).to respond_to(:spoken_language_french=)
+        expect(sample).to respond_to(:spoken_language_german=)
+        expect(sample).to respond_to(:spoken_language_japanese=)
 
-        TestOptionPrefix1.should respond_to(:spoken_language_english)
-        TestOptionPrefix1.should respond_to(:spoken_language_french)
-        TestOptionPrefix1.should respond_to(:spoken_language_german)
-        TestOptionPrefix1.should respond_to(:spoken_language_japanese)
+        expect(TestOptionPrefix1).to respond_to(:spoken_language_english)
+        expect(TestOptionPrefix1).to respond_to(:spoken_language_french)
+        expect(TestOptionPrefix1).to respond_to(:spoken_language_german)
+        expect(TestOptionPrefix1).to respond_to(:spoken_language_japanese)
 
-        sample.should_not respond_to(:japanese?)
+        expect(sample).to_not respond_to(:japanese?)
       end
 
       it "should support custom prefix in getters and setters" do
@@ -188,22 +188,22 @@ describe SimpleSet do
         end
 
         sample = TestOptionPrefix2.new
-        sample.should respond_to(:speaks_english?)
-        sample.should respond_to(:speaks_french?)
-        sample.should respond_to(:speaks_german?)
-        sample.should respond_to(:speaks_japanese?)
+        expect(sample).to respond_to(:speaks_english?)
+        expect(sample).to respond_to(:speaks_french?)
+        expect(sample).to respond_to(:speaks_german?)
+        expect(sample).to respond_to(:speaks_japanese?)
 
-        sample.should respond_to(:speaks_english=)
-        sample.should respond_to(:speaks_french=)
-        sample.should respond_to(:speaks_german=)
-        sample.should respond_to(:speaks_japanese=)
+        expect(sample).to respond_to(:speaks_english=)
+        expect(sample).to respond_to(:speaks_french=)
+        expect(sample).to respond_to(:speaks_german=)
+        expect(sample).to respond_to(:speaks_japanese=)
 
-        TestOptionPrefix2.should respond_to(:speaks_english)
-        TestOptionPrefix2.should respond_to(:speaks_french)
-        TestOptionPrefix2.should respond_to(:speaks_german)
-        TestOptionPrefix2.should respond_to(:speaks_japanese)
+        expect(TestOptionPrefix2).to respond_to(:speaks_english)
+        expect(TestOptionPrefix2).to respond_to(:speaks_french)
+        expect(TestOptionPrefix2).to respond_to(:speaks_german)
+        expect(TestOptionPrefix2).to respond_to(:speaks_japanese)
 
-        sample.should_not respond_to(:japanese?)
+        expect(sample).to_not respond_to(:japanese?)
       end
     end
 
@@ -219,21 +219,21 @@ describe SimpleSet do
           as_set :spoken_languages, [:english, :french, :german, :japanese], slim: true
         end
 
-        TestOptionSlim1.should_not respond_to(:english)
-        TestOptionSlim1.should_not respond_to(:french)
-        TestOptionSlim1.should_not respond_to(:german)
-        TestOptionSlim1.should_not respond_to(:japanese)
+        expect(TestOptionSlim1).to_not respond_to(:english)
+        expect(TestOptionSlim1).to_not respond_to(:french)
+        expect(TestOptionSlim1).to_not respond_to(:german)
+        expect(TestOptionSlim1).to_not respond_to(:japanese)
 
         sample = TestOptionSlim1.new
-        sample.should_not respond_to(:english?)
-        sample.should_not respond_to(:french?)
-        sample.should_not respond_to(:german?)
-        sample.should_not respond_to(:japanese?)
+        expect(sample).to_not respond_to(:english?)
+        expect(sample).to_not respond_to(:french?)
+        expect(sample).to_not respond_to(:german?)
+        expect(sample).to_not respond_to(:japanese?)
 
-        sample.should_not respond_to(:english=)
-        sample.should_not respond_to(:french=)
-        sample.should_not respond_to(:german=)
-        sample.should_not respond_to(:japanese=)
+        expect(sample).to_not respond_to(:english=)
+        expect(sample).to_not respond_to(:french=)
+        expect(sample).to_not respond_to(:german=)
+        expect(sample).to_not respond_to(:japanese=)
       end
 
       it 'should only generate instance members when :class is passed' do
@@ -241,21 +241,21 @@ describe SimpleSet do
           as_set :spoken_languages, [:english, :french, :german, :japanese], slim: :class
         end
 
-        TestOptionSlim2.should_not respond_to(:english)
-        TestOptionSlim2.should_not respond_to(:french)
-        TestOptionSlim2.should_not respond_to(:german)
-        TestOptionSlim2.should_not respond_to(:japanese)
+        expect(TestOptionSlim2).to_not respond_to(:english)
+        expect(TestOptionSlim2).to_not respond_to(:french)
+        expect(TestOptionSlim2).to_not respond_to(:german)
+        expect(TestOptionSlim2).to_not respond_to(:japanese)
 
         sample = TestOptionSlim2.new
-        sample.should respond_to(:english?)
-        sample.should respond_to(:french?)
-        sample.should respond_to(:german?)
-        sample.should respond_to(:japanese?)
+        expect(sample).to respond_to(:english?)
+        expect(sample).to respond_to(:french?)
+        expect(sample).to respond_to(:german?)
+        expect(sample).to respond_to(:japanese?)
 
-        sample.should respond_to(:english=)
-        sample.should respond_to(:french=)
-        sample.should respond_to(:german=)
-        sample.should respond_to(:japanese=)
+        expect(sample).to respond_to(:english=)
+        expect(sample).to respond_to(:french=)
+        expect(sample).to respond_to(:german=)
+        expect(sample).to respond_to(:japanese=)
       end
     end
 
@@ -273,7 +273,7 @@ describe SimpleSet do
 
         sample = TestOptionWhiny1.new
         expect { sample.spoken_languages = [:french, :italian, :japanese] }.to_not raise_error
-        sample.spoken_languages.should == [:french, :japanese]
+        expect(sample.spoken_languages).to eq([:french, :japanese])
       end
     end
   end
